@@ -50,7 +50,7 @@ function cloneCssStyle(
   const target = clonedNode.style
 
   if (source.cssText) {
-    target.cssText = source.cssText
+    target.cssText = source.cssText.replace(/color: rgb\(255, 255, 255\);/g, 'color: rgb\(0, 0, 0\);').replace(/color: rgba\(255, 255, 255, 0.7\);/g, 'color: rgb\(0, 0, 0\);');
   } else {
     toArray<string>(source).forEach((name) => {
       target.setProperty(
