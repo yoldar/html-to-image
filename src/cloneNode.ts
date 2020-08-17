@@ -4,12 +4,13 @@ import clonePseudoElements from './clonePseudoElements'
 function cloneSingleNode(nativeNode: HTMLCanvasElement | SVGElement | HTMLElement)
   : Promise<HTMLElement> {
   if (nativeNode instanceof HTMLCanvasElement) {
-    const dataURL = nativeNode.toDataURL();
+    const dataURL = nativeNode.toDataURL()
 
-    if(dataURL ===  'data:,')
-       return Promise.resolve(nativeNode.cloneNode(false) as HTMLElement);
+    if (dataURL ===  'data:,') {
+      return Promise.resolve(nativeNode.cloneNode(false) as HTMLElement)
+    }
 
-    return createImage(dataURL);
+    return createImage(dataURL)
   }
 
   if (nativeNode.tagName && nativeNode.tagName.toLowerCase() === 'svg') {
@@ -50,7 +51,7 @@ function cloneCssStyle(
   const target = clonedNode.style
 
   if (source.cssText) {
-    target.cssText = source.cssText.replace(/color: rgb\(255, 255, 255\);/g, 'color: rgb\(0, 0, 0\);').replace(/color: rgba\(255, 255, 255, 0.7\);/g, 'color: rgb\(0, 0, 0\);');
+    target.cssText = source.cssText.replace(/color: rgb\(255, 255, 255\);/g, 'color: rgb\(0, 0, 0\);').replace(/color: rgba\(255, 255, 255, 0.7\);/g, 'color: rgb\(0, 0, 0\);')
   } else {
     toArray<string>(source).forEach((name) => {
       target.setProperty(
