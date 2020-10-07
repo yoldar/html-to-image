@@ -51,16 +51,21 @@ function cloneCssStyle(
   const target = clonedNode.style
 
   if (source.cssText) {
-    target.cssText = source.cssText.replace(/color: rgb\(255, 255, 255\);/g, 'color: rgb\(0, 0, 0\);')
-                                  .replace(/color: rgba\(255, 255, 255, 0.7\);/g, 'color: rgb\(0, 0, 0\);')
-                                  .replace(/color: rgba\(255, 255, 255, 0.5\);/g, 'color: rgb\(0, 0, 0\);')
+    target.cssText = source.cssText
+                                  .replace(/color: rgb\(255, 255, 255\);/g, 'color: #000;')
+                                  .replace(/color: rgba\(255, 255, 255, 0.7\);/g, 'color: #000;')
+                                  .replace(/color: rgba\(255, 255, 255, 0.5\);/g, 'color: #000;')
   } else {
     toArray<string>(source).forEach((name) => {
-      target.setProperty(
-        name,
-        source.getPropertyValue(name),
-        source.getPropertyPriority(name),
-      )
+      if (source.getPropertyValue(name) === 'rgb(255, 255, 255)') {
+        target.setProperty(name, '#000', source.getPropertyPriority(name))
+      } else if (source.getPropertyValue(name) === 'rgba(255, 255, 255, 0.5)') {
+        target.setProperty(name, '#000', source.getPropertyPriority(name))
+      } else if (source.getPropertyValue(name) === 'rgba(255, 255, 255, 0.7)') {
+        target.setProperty(name, '#000', source.getPropertyPriority(name))
+      } else {
+        target.setProperty(name, source.getPropertyValue(name), source.getPropertyPriority(name))
+      }
     })
   }
 }
